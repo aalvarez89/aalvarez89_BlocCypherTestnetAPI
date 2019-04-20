@@ -1,2 +1,0 @@
-# BlocCypherTestnetAPI
-Created with CodeSandbox
