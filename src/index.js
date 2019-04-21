@@ -9,31 +9,10 @@ let prv_address, pub_address, std_address;
 
 const makeRequest = async () => {
   try {
-    //   let response = await fetch(
-    //     `https://api.blockcypher.com/v1/bcy/test/addrs`,
-    //     { method: "POST" }
-    //   );
-
-    //   let json = await response.json();
-    //   prv_address = json.private;
-    //   pub_address = json.public;
-    //   std_address = json.address;
-    //   console.log(json);
-
-    //   document.getElementById("app").innerHTML = `
-    // <div>
-    //     Request Done.
-    //     <br>
-    //     Private Address: [${prv_address}]
-    //     <br>
-    //     Public Address: [${pub_address}]
-    //  <br>
-    //  Address: [${std_address}]
-    // </div>
-    //  `;
     let response = await fetch(
-      `https://api.blockcypher.com/v1/bcy/test/addrs`,
-      { method: "POST" }
+      `https://api.blockcypher.com/v1/bcy/test/addrs`, {
+        method: "POST"
+      }
     );
     let json = await response.json();
     std_address = json.address;
@@ -66,18 +45,17 @@ const getBalance = async () => {
 };
 
 const sendFunds = async () => {
-  /*
-  var data = {"address": "CFqoZmZ3ePwK5wnkhxJjJAQKJ82C7RJdmd", "amount": 100000}
-$.post('https://api.blockcypher.com/v1/bcy/test/faucet?token=$YOUR_TOKEN', JSON.stringify(data))
-  .then(function(d) {console.log(d)});
-
-  */
   try {
     console.log(INPT_FIELD.value);
-    let data = { address: std_address, amount: parseInt(INPT_FIELD.value) };
+    let data = {
+      address: std_address,
+      amount: parseInt(INPT_FIELD.value)
+    };
     let fundAddress = await fetch(
-      `https://api.blockcypher.com/v1/bcy/test/faucet?token=${token}`,
-      { method: "POST", body: JSON.stringify(data) }
+      `https://api.blockcypher.com/v1/bcy/test/faucet?token=${token}`, {
+        method: "POST",
+        body: JSON.stringify(data)
+      }
     );
     let json = await fundAddress.json();
     console.log(json);
