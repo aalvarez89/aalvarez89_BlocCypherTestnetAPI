@@ -1,5 +1,5 @@
 //Nodes
-const BAL_BUTTON = document.getElementById("balance-button");
+
 const FND_BUTTON = document.getElementById("fund-button");
 const INPT_FIELD = document.getElementById("num-input");
 const BAL_NUMBER = document.getElementById("balance");
