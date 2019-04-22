@@ -14,7 +14,7 @@ let std_address;
 
 //Fetch Functions
 const makeRequest = async () => {
-  // Function to request the BlockCypher's API
+  // Function to request the BlockCypher's API and Create new Address
   try {
     let response = await fetch(
       `https://api.blockcypher.com/v1/bcy/test/addrs`, {
@@ -42,6 +42,7 @@ const makeRequest = async () => {
 
 makeRequest();
 const sendFunds = async () => {
+  // Function trigger on Click event to request funds from test faucet, fund account and return & update Balance
   if (!Boolean(INPT_FIELD.value) || INPT_FIELD.value > 100000) {
 
     ALERT_TEXT.classList.add("layout-text-alr");
