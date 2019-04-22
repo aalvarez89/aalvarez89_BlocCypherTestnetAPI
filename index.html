@@ -13,14 +13,13 @@
   <div class="wrapper">
 
     <div id="app"></div>
-
     <br>
-    <p class="layout-text-1">Balance <span id="balance" class="bal-num">0</span> BCY</p>
-    <p class="layout-text-1">Fund Address</p>
-    <input id="num-input" type="number" name="quantity" min="0" max="5000" placeholder="0" />
+    <p class="layout-text-1">Balance <span id="balance" class="bal-num">0</span> <span class="bal-num">BCY</span></p>
+    <p class="layout-text-2">Fund Address</p>
+    <input id="num-input" type="number" name="quantity" min="0" max="100000" placeholder="0" />
     <button id="fund-button">Fund</button>
-    <div class="bal-box">
-    </div>
+    <p id="alert" class="layout-text-alr-off">Can't send 0/Negative/>100000 funds, try again!</p>
+    <!-- <div class="add-box"></div> -->
 
     <!-- <button id="balance-button">Balance</button> -->
   </div>

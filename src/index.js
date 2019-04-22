@@ -3,6 +3,7 @@ const BAL_BUTTON = document.getElementById("balance-button");
 const FND_BUTTON = document.getElementById("fund-button");
 const INPT_FIELD = document.getElementById("num-input");
 const BAL_NUMBER = document.getElementById("balance");
+const ALERT_TEXT = document.getElementById("alert")
 const APP = document.getElementById("app");
 
 
@@ -21,9 +22,11 @@ const makeRequest = async () => {
     let json = await response.json();
     std_address = json.address;
     APP.innerHTML = `
-    <p class="layout-text-1">New address created!</p>
-  <br>
-  <p class="layout-text-1">Address: </p>
+    <p class="layout-text-2 fade">New address created!</p>
+    
+    <br>
+    <img class="mailbox" src="src/img/mailbox.png" alt="Mailbox Address">
+  <p class="layout-text-1">Address </p>
   <div class="address">${std_address}</div>`;
     // console.log(json);
   } catch (err) {
@@ -53,30 +56,42 @@ makeRequest();
 // };
 
 const sendFunds = async () => {
-  try {
-    console.log(INPT_FIELD.value);
-    let data = {
-      address: std_address,
-      amount: parseInt(INPT_FIELD.value)
-    };
-    let fundAddress = await fetch(
-      `https://api.blockcypher.com/v1/bcy/test/faucet?token=${token}`, {
-        method: "POST",
-        body: JSON.stringify(data)
+  if (!Boolean(INPT_FIELD.value) || INPT_FIELD.value > 100000) {
+
+    ALERT_TEXT.classList.add("layout-text-alr");
+    ALERT_TEXT.classList.remove("layout-text-alr-off");
+    console.log(ALERT_TEXT.classList[0])
+  } else {
+    try {
+      console.log(INPT_FIELD.value);
+      let data = {
+        address: std_address,
+        amount: parseInt(INPT_FIELD.value)
+      };
+      let fundAddress = await fetch(
+        `https://api.blockcypher.com/v1/bcy/test/faucet?token=${token}`, {
+          method: "POST",
+          body: JSON.stringify(data)
+        }
+      );
+      let json = await fundAddress.json();
+
+
+      console.log(json);
+
+      let limit_response = await fetch(
+        `https://api.blockcypher.com/v1/bcy/test/addrs/${std_address}/balance`
+      );
+      let limit_json = await limit_response.json();
+      BAL_NUMBER.innerHTML = limit_json.final_balance;
+      console.log(limit_json);
+
+      if (ALERT_TEXT.classList[0] === "layout-text-alr") {
+        ALERT_TEXT.classList.remove("layout-text-alr");
+        ALERT_TEXT.classList.add("layout-text-alr-off");
       }
-    );
-    let json = await fundAddress.json();
-
-
-    console.log(json);
-
-    let limit_response = await fetch(
-      `https://api.blockcypher.com/v1/bcy/test/addrs/${std_address}/balance`
-    );
-    let limit_json = await limit_response.json();
-    BAL_NUMBER.innerHTML = limit_json.final_balance;
-    console.log(limit_json);
-  } catch (err) {}
+    } catch (err) {}
+  }
 };
 
 //Event Handlers
